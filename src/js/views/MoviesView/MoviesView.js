@@ -57,6 +57,7 @@ class MoviesView extends Component {
                             {this.props.collections.map((collection, index) => (
                                 // TODO: Add multi select and update
                                 <option
+                                    selected={collection.id === this.props.collection.id}
                                     value={collection.id}
                                     key={index}>Add to {collection.name}
                                 </option>
