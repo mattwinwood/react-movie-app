@@ -47,7 +47,7 @@ class MoviesView extends Component {
                         heading={`${collection.name} (${collection.movies.length})`}
                         subheading={`Average Rating: ${collection.movies && getAverageRating(collection.movies)}`}
                     />
-                    < Row style={{marginTop: "3rem", marginBottom: "2rem"}}>
+                    <Row style={{marginTop: "3rem", marginBottom: "2rem"}}>
                         <Col xs={5}>
                             <Form.Control
                                 type="text"
