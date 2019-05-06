@@ -12,12 +12,12 @@ class Movies extends Component {
     };
 
     renderMovies() {
-        if(this.props.movies) return this.props.movies.map(movie => <Movie key={movie.imdbID} {...movie} onClick={this.props.onClick}/>)
+        this.props.movies.map(movie => <Movie key={movie.imdbID} {...movie} onClick={this.props.onClick}/>)
     }
     render() {
         return (
             <div className="movies-container" style={styles.container}>
-                {this.renderMovies()}
+                {this.props.movies && this.renderMovies()}
             </div>
         );
     }
