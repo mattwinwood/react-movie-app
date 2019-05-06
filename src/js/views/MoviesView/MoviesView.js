@@ -41,40 +41,44 @@ class MoviesView extends Component {
         const {collection} = this.props;
         return (
             <div className="movies-view-container">
-                <Heading
-                    heading={`${collection.name} (${collection.movies.length})`}
-                    subheading={`Average Rating: ${collection.movies && getAverageRating(collection.movies)}`}
-                />
-                <Row style={{marginTop: "3rem", marginBottom: "2rem"}}>
-                    <Col xs={5}>
-                        <Form.Control
-                            type="text"
-                            onKeyUp={(e) => this.updateHandler(e)}
-                            placeholder="Search For Movies By Title"/>
-                    </Col>
-                    <Col xs={3}>
-                        <Form.Control as="select" onChange={this.sharedSelectionHandler.bind(this)}>
-                            {this.props.collections.map((collection, index) => (
-                                // TODO: Add multi select and update
-                                <option
-                                    selected={collection.id === this.props.collection.id}
-                                    value={collection.id}
-                                    key={index}>Add to {collection.name}
-                                </option>
-                            ))}
-                        </Form.Control>
-                    </Col>
-                    <Col xs={1}/>
-                    <Col xs={3}>
-                        <Button
-                            disabled={this.props.collection.movies.length === 0}
-                            style={styles.goBack}
-                            onClick={() => {
-                                this.props.setActiveView(["CollectionDetailView"]);
-                            }}
-                            variant="outline-light">{content.complete}</Button>
-                    </Col>
-                </Row>
+                {collection &&
+                <React.Fragment>
+                    <Heading
+                        heading={`${collection.name} (${collection.movies.length})`}
+                        subheading={`Average Rating: ${collection.movies && getAverageRating(collection.movies)}`}
+                    />
+                    < Row style={{marginTop: "3rem", marginBottom: "2rem"}}>
+                        <Col xs={5}>
+                            <Form.Control
+                                type="text"
+                                onKeyUp={(e) => this.updateHandler(e)}
+                                placeholder="Search For Movies By Title"/>
+                        </Col>
+                        <Col xs={3}>
+                            <Form.Control as="select" onChange={this.sharedSelectionHandler.bind(this)}>
+                                {this.props.collections.map((collection, index) => (
+                                    // TODO: Add multi select and update
+                                    <option
+                                        selected={collection.id === this.props.collection.id}
+                                        value={collection.id}
+                                        key={index}>Add to {collection.name}
+                                    </option>
+                                ))}
+                            </Form.Control>
+                        </Col>
+                        <Col xs={1}/>
+                        <Col xs={3}>
+                            <Button
+                                disabled={this.props.collection.movies.length === 0}
+                                style={styles.goBack}
+                                onClick={() => {
+                                    this.props.setActiveView(["CollectionDetailView"]);
+                                }}
+                                variant="outline-light">{content.complete}</Button>
+                        </Col>
+                    </Row>
+                </React.Fragment>
+                }
                 <Movies
                     onClick={this.addMovieHandler}
                     {...this.props}/>

@@ -12,9 +12,8 @@ class Movies extends Component {
     };
 
     renderMovies() {
-        return this.props.movies.map(movie => <Movie key={movie.imdbID} {...movie} onClick={this.props.onClick}/>)
+        if(this.props.movies) return this.props.movies.map(movie => <Movie key={movie.imdbID} {...movie} onClick={this.props.onClick}/>)
     }
-
     render() {
         return (
             <div className="movies-container" style={styles.container}>
