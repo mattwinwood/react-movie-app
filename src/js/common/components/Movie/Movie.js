@@ -4,6 +4,9 @@ import {Card, Button} from 'react-bootstrap';
 import styles from "./styles";
 
 class Movie extends Component {
+    // Defining props as static fields allows you to keep them inside of the class and
+    // benefit from a common convention of keeping statics at the top of the class.
+    // https://michalzalecki.com/react-components-and-class-properties/
     static propTypes = {
         props: PropTypes.shape({
             movie: PropTypes.object.isRequired,
@@ -11,19 +14,22 @@ class Movie extends Component {
         })
     };
 
+    // Initializing state inside of the constructor comes with an overhead of calling super.
+    // Instead, we can initialize state directly as a class property.
+    // https://michalzalecki.com/react-components-and-class-properties/
     state = {
         active: false
     };
 
     toggleActiveHandler = (isActive) => this.setState({active: isActive});
 
-    renderCardBody = (movie) => (
+    renderCardBody = () => (
         <React.Fragment>
             <Card.Body style={styles.cardBody}>
                 <Button
                     className="roboto-condensed"
                     style={styles.cardButton}
-                    onClick={() => this.props.onClick(this.props)}
+                    onClick={() => this.props.onClick(this.props)} // Passing event handlers as props keeps our common components pure.
                     variant="outline-light roboto-condensed">
                     ADD TO COLLECTION
                 </Button>

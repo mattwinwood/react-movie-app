@@ -1,3 +1,4 @@
+// Methods not specific to any component. As this scales we can break out into separate files and include index.js
 const generateRandomID = function () {
     return '_' + Math.random().toString(36).substr(2, 9);
 };

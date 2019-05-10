@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import {Navbar} from 'react-bootstrap';
 
 class Navigation extends Component {
+    // Defining props as static fields allows you to keep them inside of the class and
+    // benefit from a common convention of keeping statics at the top of the class.
+    // https://michalzalecki.com/react-components-and-class-properties/
     static propTypes = {
         logo: PropTypes.string.isRequired,
         navItems: PropTypes.array

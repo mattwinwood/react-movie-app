@@ -1,4 +1,4 @@
-import {GET_SHARED_COLLECTION, NEW_COLLECTION, SAVE_COLLECTION, SET_ACTIVE_COLLECTION} from "../actions/collections";
+import {SET_SHARED_COLLECTION, NEW_COLLECTION, SAVE_COLLECTION, SET_ACTIVE_COLLECTION} from "../actions/collections";
 import {SET_MOVIES, IS_REQUESTING, REQUEST_ERROR, ADD_MOVIE} from "../actions/movies";
 import {SET_ACTIVE_VIEW} from "../actions/visibility";
 import {CONFIG_SEED_COLLECTIONS} from "../../../config";
@@ -6,23 +6,26 @@ import {CONFIG_SEED_COLLECTIONS} from "../../../config";
 function reducer(state, action) {
     switch (action.type) {
         case ADD_MOVIE:
-            const thisMovie = {...action.movie, userRating: 1};
-            const collection = {...state.collection};
-            collection.movies.push(thisMovie);
-            return Object.assign({}, state, {collection});
+            const thisMovie = {...action.movie, userRating: 1}; // Copy selected movie object and add a default user rating property.
+            const collection = {...state.collection}; // Get the active collection
+            collection.movies.push(thisMovie); // add selected movie to collection
+            return Object.assign({}, state, {collection}); // update state.
         case SET_MOVIES:
             return {...state, movies: action.movies};
         case NEW_COLLECTION:
             return {...state, collections: [...state.collections, action.collection]};
+
+        // TODO: write Redux helpers that simplify the immutability component of redux.
         case SAVE_COLLECTION:
             return Object.assign({}, state, {
                 collections: state.collections.map((collection, index) => {
                     const collectionIndex = getCollectionIndexById(state, action.id);
-                    if (index === collectionIndex) return Object.assign({}, collection, action.collection)
+                    if (index === collectionIndex) return Object.assign({}, collection, action.collection); // If
                     return collection
                 })
             })
-        case GET_SHARED_COLLECTION:
+
+        case SET_SHARED_COLLECTION:
             const sharedCollection = state.collections.find((collection) => collection.id === action.id);
             return Object.assign({}, state, {sharedCollection});
         case SET_ACTIVE_COLLECTION:
@@ -53,10 +56,10 @@ const initialState = {
     requestError: false
 };
 
-function app(state = initialState, action) {
+function rootReducer(state = initialState, action) {
     return (
         reducer(state, action)
     );
 }
 
-export default app;
+export default rootReducer;

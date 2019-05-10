@@ -7,7 +7,11 @@ import {updateCollection, setActiveCollection} from "../../redux/actions/collect
 import {setActiveView} from "../../redux/actions/visibility";
 import {getAverageRating, compareByAsc, compareByDesc} from "../../utils";
 
+// This class contains a great example of why Redux is awesome and how you can find yourself in inheritance hell without it.
 class CollectionDetailView extends Component {
+    // Initializing state inside of the constructor comes with an overhead of calling super.
+    // Instead, we can initialize state directly as a class property.
+    // https://michalzalecki.com/react-components-and-class-properties/
     state = {
         tableData: this.props.collection.movies, //
         filterInput: "",
@@ -46,12 +50,14 @@ class CollectionDetailView extends Component {
         this.setState({tableData, filterInput: event.target.value});
     }
 
+    // Fires when delete button is clicked
     deleteMovieHandler(movie) {
         const collection = this.props.collection;
         collection["movies"] = collection.movies.filter((obj) => obj.imdbID !== movie.imdbID); // Get rest of the movies
         this.setState({filterInput: "", tableData: collection.movies});
     }
 
+    // Fires when movie rating is changed.
     updateMovieHandler(event, key, id) {
         const value = parseInt(event.target.value);
         const updatedMovies = this.updateMovieByKey(key, value, id); // By key (and id). Needs simplified.
@@ -60,6 +66,8 @@ class CollectionDetailView extends Component {
         this.props.updateCollection(updatedCollection, updatedCollection.id);
     }
 
+    // Helper method for update handler.
+    // Will allow us to use the same method as movie properties are added to table.
     updateMovieByKey(key, value, id) {
         return this.props.collection.movies.map((movie) =>
             (movie.imdbID === id) ? {...movie, [key]: value} : movie);

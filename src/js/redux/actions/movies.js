@@ -27,8 +27,8 @@ export function getMovies(searchTerm) {
         dispatch(isRequesting(true));
         axios.get("http://www.omdbapi.com/?s=" + searchTerm + "&type=movie&r=json&plot=full&apikey=" + CONFIG_API_KEY)
              .then(response => dispatch(setMovies(response.data.Search)))
-             .then(res => dispatch(isRequesting(false)))
-             .catch(e => dispatch(requestError(true)))
+             .then((res) => dispatch(isRequesting(false)))
+             .catch((e) => dispatch(requestError(true)))
     }
 }
 

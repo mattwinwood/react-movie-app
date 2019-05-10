@@ -1,21 +1,22 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {Form, Row, Col, Button} from 'react-bootstrap';
-import {getSharedCollection, setActiveCollection} from "../../redux/actions/collections";
+import {setSharedCollection, setActiveCollection} from "../../redux/actions/collections";
 import {getMovies, addMovie} from "../../redux/actions/movies";
 import {setActiveView} from "../../redux/actions/visibility";
+import {getAverageRating} from "../../utils";
 import Movies from "../../common/components/Movies/Movies";
+import Heading from "../../common/components/Heading/Heading";
 import {CONFIG_DEFAULT_SEARCH_TERM} from "../../../config";
 import styles from "./styles";
 import content from "./content";
-import Heading from "../../common/components/Heading/Heading";
-import {getAverageRating} from "../../utils";
 
 class MoviesView extends Component {
     componentDidMount() {
         this.props.getMovies(CONFIG_DEFAULT_SEARCH_TERM);
     }
 
+    // Fires when the user searches for movies
     updateHandler(event) {
         const searchTerm = event.target.value;
         if (searchTerm && event.keyCode === 13) {
@@ -32,9 +33,10 @@ class MoviesView extends Component {
         this.props.addMovie(movie);
     }
 
+    // Fires when the user changes the value of the collections dropdown. Sets this.props.sharedCollection
     sharedSelectionHandler(event) {
         const id = event.target.value;
-        this.props.getSharedCollection(id);
+        this.props.setSharedCollection(id);
     }
 
     render() {
@@ -54,18 +56,7 @@ class MoviesView extends Component {
                                 onKeyUp={(e) => this.updateHandler(e)}
                                 placeholder="Search For Movies By Title"/>
                         </Col>
-                        <Col xs={3}>
-                            <Form.Control as="select" onChange={this.sharedSelectionHandler.bind(this)}>
-                                {this.props.collections.map((collection, index) => (
-                                    // TODO: Add multi select and update
-                                    <option
-                                        selected={collection.id === this.props.collection.id}
-                                        value={collection.id}
-                                        key={index}>Add to {collection.name}
-                                    </option>
-                                ))}
-                            </Form.Control>
-                        </Col>
+
                         <Col xs={1}/>
                         <Col xs={3}>
                             <Button
@@ -87,6 +78,7 @@ class MoviesView extends Component {
     }
 }
 
+// TODO: Could be simplified further by using containers
 const mapStateToProps = (state) => {
     return {
         movies: state.movies,
@@ -104,8 +96,8 @@ const mapDispatchToProps = (dispatch) => {
         addMovie: (movie) => {
             dispatch(addMovie(movie));
         },
-        getSharedCollection: (id) => {
-            dispatch(getSharedCollection(id));
+        setSharedCollection: (id) => {
+            dispatch(setSharedCollection(id));
         },
         setActiveCollection: (collection) => {
             dispatch(setActiveCollection(collection));

@@ -1,5 +1,5 @@
 export const SET_ACTIVE_COLLECTION = "SET_ACTIVE_COLLECTION";
-export const GET_SHARED_COLLECTION = "GET_SHARED_COLLECTION";
+export const SET_SHARED_COLLECTION = "SET_SHARED_COLLECTION";
 export const SAVE_COLLECTION = "SAVE_COLLECTION";
 export const NEW_COLLECTION = "NEW_COLLECTION";
 
@@ -8,9 +8,9 @@ export function newCollection(collection) {
     return {type: NEW_COLLECTION, collection};
 }
 
-export function getSharedCollection(id) {
-    console.log("Used getSharedCollection()...", id);
-    return {type: GET_SHARED_COLLECTION, id};
+export function setSharedCollection(id) {
+    console.log("Used setSharedCollection()...", id);
+    return {type: SET_SHARED_COLLECTION, id};
 }
 
 export function setActiveCollection(collection) {

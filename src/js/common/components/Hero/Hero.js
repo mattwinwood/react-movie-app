@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import styles from "./styles";
 
 class Hero extends Component {
+    // Defining props as static fields allows you to keep them inside of the class and
+    // benefit from a common convention of keeping statics at the top of the class.
+    // https://michalzalecki.com/react-components-and-class-properties/
     static propTypes = {
         image: PropTypes.string.isRequired
     };

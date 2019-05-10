@@ -12,6 +12,7 @@ import {CONFIG_HERO_IMAGE_URL, CONFIG_LOGO_IMAGE_URL} from "../config";
 class Root extends Component {
     render() {
         console.log("activeView: ", this.props.activeView);
+        // Root contains ALLL of our views
         return (
             <React.Fragment>
                 <Hero image={CONFIG_HERO_IMAGE_URL}/>
@@ -29,7 +30,7 @@ class Root extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        activeView: state.activeView
+        activeView: state.activeView // Using activeView (array) so I don't need react-router
     };
 };
 
